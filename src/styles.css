@@ -27,3 +27,45 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     cursor: pointer;
     fill: limegreen;
 }
+
+.line-div {
+    height: 1px;
+    background-color: #848484;
+    width: 100%;
+    margin-top: 2vh;
+}
+
+.form-input {
+    border: 1px solid #c0c0c0;
+    padding: 0.8rem;
+    width: calc(100% - 1.6rem);
+    border-radius: 0.4rem;
+    transition: box-shadow 500ms;
+}
+
+.form-input:focus {
+    outline: none;
+    box-shadow: 0.5rem 0.1rem 2rem #dcdcdc;
+}
+
+.btn {
+    width: 100%;
+    border: 1px solid #c0c0c0;
+    border-radius: 0.4rem;
+    padding: 0.8rem;
+    cursor: pointer;
+}
+
+.sticky {
+    position: sticky;
+    top: 0;
+    background-color: white;
+}
+
+.footer {
+    position: sticky;
+    left: 0;
+    bottom: 0;
+    background-color: white;
+    padding-bottom: 1vh;
+  }
