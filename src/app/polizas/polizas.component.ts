@@ -12,7 +12,7 @@ import { PolizaForAddDTO } from '../models/polizaDTO';
 export class PolizasComponent implements OnInit {
   @Output() polizaArray = new EventEmitter();
 
-  nombrePoliza: string;
+  nombrePoliza: string = '';
   results$: Observable<any>;
   updateTrigger$= new BehaviorSubject<number>(1);
 

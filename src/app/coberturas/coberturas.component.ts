@@ -12,7 +12,7 @@ import { CoberturaForAddDTO } from '../models/coberturaDTO';
 export class CoberturasComponent implements OnInit {
   @Output() coberturaArray = new EventEmitter();
 
-  nombreCobertura: string;
+  nombreCobertura: string = '';
   results$: Observable<any>;
   updateTrigger$= new BehaviorSubject<number>(1);
 

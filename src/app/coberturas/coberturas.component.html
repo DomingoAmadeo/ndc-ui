@@ -1,6 +1,6 @@
 <div class="flex-column" style="text-align: center; row-gap: 1vh;" *ngIf="{stream: results$ | async} as observable">
     <input type="text" [(ngModel)]="nombreCobertura" placeholder="Crear nueva cobertura" />
-    <button (click)="submitCobertura()">Submit</button>
+    <button (click)="submitCobertura()" [disabled]="nombreCobertura.length == 0">Submit</button>
     <div class="flex-row" *ngFor="let cobertura of observable.stream">
         <span>{{ cobertura.id }}. {{ cobertura.nombre }}</span>
         <button style="margin-left: auto;" (click)="deleteCobertura(cobertura.id)">Delete</button>
