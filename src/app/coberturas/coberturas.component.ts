@@ -2,7 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { CoberturaService } from '../services/cobertura.service';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import { CoberturaForAddDTO } from '../models/coberturaDTO';
+import { CoberturaForAddDTO, CoberturaForUpdateDTO } from '../models/coberturaDTO';
+import { Cobertura } from '../models/cobertura';
 
 @Component({
   selector: 'app-coberturas',
@@ -15,6 +16,8 @@ export class CoberturasComponent implements OnInit {
   nombreCobertura: string = '';
   results$: Observable<any>;
   updateTrigger$= new BehaviorSubject<number>(1);
+  editId: number = 0;
+  editName: string = '';
 
   constructor(
     private coberturaService: CoberturaService,
@@ -43,6 +46,29 @@ export class CoberturasComponent implements OnInit {
   deleteCobertura(id: number){
     this.coberturaService.deleteCoberturaById(id).subscribe((result) => {
         this.updateTrigger$.next(3);
+      }, (err) => { console.log("error"); }
+    );
+  }
+
+  openEdit(cobertura: Cobertura){
+    this.editId = cobertura.id;
+    this.editName = cobertura.nombre;
+  }
+
+  cancelEdit(){
+    this.editId = 0;
+    this.editName = '';
+  }
+
+  submitEdit(){
+    let updatedCobertura: CoberturaForUpdateDTO = {
+      id: this.editId,
+      nombre: this.editName
+    };
+
+    this.coberturaService.updateCobertura(updatedCobertura).subscribe((result) => {
+        this.updateTrigger$.next(3);
+        this.cancelEdit();
       }, (err) => { console.log("error"); }
     );
   }

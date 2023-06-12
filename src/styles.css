@@ -22,3 +22,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     cursor: pointer;
     fill: lightblue;
 }
+
+.hovergreen:hover{
+    cursor: pointer;
+    fill: limegreen;
+}

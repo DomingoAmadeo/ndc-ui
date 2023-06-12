@@ -2,7 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { PolizaService } from '../services/poliza.service';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import { PolizaForAddDTO } from '../models/polizaDTO';
+import { PolizaForAddDTO, PolizaForUpdateDTO } from '../models/polizaDTO';
+import { Poliza } from '../models/poliza';
 
 @Component({
   selector: 'app-polizas',
@@ -15,6 +16,8 @@ export class PolizasComponent implements OnInit {
   nombrePoliza: string = '';
   results$: Observable<any>;
   updateTrigger$= new BehaviorSubject<number>(1);
+  editId: number = 0;
+  editName: string = '';
 
   constructor(
     private polizaService: PolizaService,
@@ -44,6 +47,29 @@ export class PolizasComponent implements OnInit {
     this.polizaService.deletePolizaById(id).subscribe((result) => {
         this.updateTrigger$.next(0);
       }, (err) => { console.log('error'); }
+    );
+  }
+
+  openEdit(poliza: Poliza){
+    this.editId = poliza.id;
+    this.editName = poliza.nombre;
+  }
+
+  cancelEdit(){
+    this.editId = 0;
+    this.editName = '';
+  }
+
+  submitEdit(){
+    let updatedPoliza: PolizaForUpdateDTO = {
+      id: this.editId,
+      nombre: this.editName
+    };
+
+    this.polizaService.updatePoliza(updatedPoliza).subscribe((result) => {
+        this.updateTrigger$.next(3);
+        this.cancelEdit();
+      }, (err) => { console.log("error"); }
     );
   }
 }
