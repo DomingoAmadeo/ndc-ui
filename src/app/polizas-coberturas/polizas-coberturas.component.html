@@ -1,0 +1,49 @@
+<form class="flex-column" style="width: 35vw; row-gap: 1vh;" [formGroup]="polizasCoberturasFormGroup">
+    <div class="flex-row" style="justify-content: center;">
+        <label for="poliza" style="margin-right: 0.5rem;">Poliza: </label>
+        <select formControlName="polizaId" name="poliza">
+            <option [ngValue]="null">Seleccione una poliza</option>
+            <option *ngFor="let poliza of polizas" [ngValue]="poliza.id">{{ poliza.nombre }}</option>
+        </select>
+    </div>
+    <div class="flex-row" style="justify-content: space-around;">
+        <span>Cobertura</span>
+        <span>Monto</span>
+    </div>
+    <div class="flex-row" style="justify-content: space-around;">
+        <select formControlName="mandatoryCoberturaId">
+            <option [ngValue]="null">Seleccione una cobertura</option>
+            <option *ngFor="let cobertura of coberturas" [ngValue]="cobertura.id">{{ cobertura.nombre }}</option>
+        </select>
+        <input formControlName="mandatoryAmount" type="number" (blur)="updateAmount()">
+    </div>
+    <div class="flex-row" style="justify-content: space-around;" *ngFor="let field of additionalFields">
+        <select formControlName="{{field.coberturaId}}">
+            <option [ngValue]="null">Seleccione una cobertura</option>
+            <option *ngFor="let cobertura of coberturas" [ngValue]="cobertura.id">{{ cobertura.nombre }}</option>
+        </select>
+        <input formControlName="{{field.montoAsegurado}}" type="number" (blur)="updateAmount()">
+    </div>
+    <div class="flex-row" style="justify-content: space-around;">
+        <span style="width: 7rem;">Total:</span>
+        <span style="width: 7rem;">${{ totalAmount$ | async }}</span>
+    </div>
+    <div class="flex-row" style="justify-content: space-around;">
+        <button (click)="addField()">Agregar campo</button>
+        <button (click)="removeField()" [disabled]="additionalFields.length < 1">Remover campo</button>
+        <button (click)="submit()" [disabled]="this.polizasCoberturasFormGroup.invalid">Submit</button>
+    </div>
+</form>
+<div class="flex-row" style="width: 35vw; gap: 0.5rem;" *ngIf="{stream: results$ | async} as observable">
+    <div class="flex-column card" style="margin-top: 1vh;" *ngFor="let polizaDetalle of observable.stream">
+        <span style="font-size: 110%; font-weight: 450;">{{ polizaDetalle.nombre }}</span>
+        <div class="flex-row" *ngFor="let cobertura of polizaDetalle.coberturas">
+            <span style="max-width: 8vw; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{ cobertura.nombre }}</span> 
+            <span style="margin-left: auto;">$ {{ cobertura.monto }}</span>
+        </div>
+        <div class="flex-row" style="margin-top: auto;">
+            <span style="font-size: 110%; font-weight: 450;">Total </span> 
+            <span style="margin-left: auto;">$ {{ polizaDetalle.montoTotal }}</span>
+        </div>
+    </div>
+</div>

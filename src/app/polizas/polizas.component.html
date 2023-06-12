@@ -1,0 +1,8 @@
+<div class="flex-column" style="text-align: center; row-gap: 1vh;" *ngIf="{stream: results$ | async} as observable">
+    <input type="text" [(ngModel)]="nombrePoliza" placeholder="Crear nueva poliza" />
+    <button (click)="submitPoliza()">Submit</button>
+    <div class="flex-row" *ngFor="let poliza of observable.stream">
+        <span>{{ poliza.id }}. {{ poliza.nombre }}</span>
+        <button style="margin-left: auto;" (click)="deletePoliza(poliza.id)">Delete</button>
+    </div>
+</div>

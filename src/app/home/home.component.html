@@ -1,0 +1,9 @@
+<div class="container">
+    <div class="flex-row" style="gap: 1rem; height: 35vh; overflow-x: auto; width: 35vw;">
+        <app-polizas (polizaArray)="updatePoliza($event)"></app-polizas>
+        <app-coberturas (coberturaArray)="updateCoberturas($event)"></app-coberturas>
+    </div>
+    <div class="flex-row" style="justify-content: center; width: 35vw;">
+        <app-polizas-coberturas [coberturas]="coberturas" [polizas]="polizas"></app-polizas-coberturas>
+    </div>
+</div>
