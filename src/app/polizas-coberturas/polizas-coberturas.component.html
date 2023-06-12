@@ -1,49 +1,53 @@
-<form class="flex-column" style="width: 35vw; row-gap: 1vh;" [formGroup]="polizasCoberturasFormGroup">
-    <div class="flex-row" style="justify-content: center;">
-        <label for="poliza" style="margin-right: 0.5rem;">Poliza: </label>
-        <select formControlName="polizaId" name="poliza">
+<div class="flex-row" style="margin-top: 1vh;">
+    <form class="flex-column" style="width: 50%; row-gap: 1vh; margin-right: 5rem;" [formGroup]="polizasCoberturasFormGroup">
+        <span style="font-size: 150%; font-weight: 500; margin-bottom: 1vh;">Crear un nuevo seguro</span>
+        <label for="poliza" style="font-size: 125%; font-weight: 475;">Poliza:</label>
+        <select class="form-input" style="width: fit-content; padding: 0.2rem;" formControlName="polizaId" name="poliza">
             <option [ngValue]="null">Seleccione una poliza</option>
             <option *ngFor="let poliza of polizas" [ngValue]="poliza.id">{{ poliza.nombre }}</option>
         </select>
-    </div>
-    <div class="flex-row" style="justify-content: space-around;">
-        <span>Cobertura</span>
-        <span>Monto</span>
-    </div>
-    <div class="flex-row" style="justify-content: space-around;">
-        <select formControlName="mandatoryCoberturaId">
-            <option [ngValue]="null">Seleccione una cobertura</option>
-            <option *ngFor="let cobertura of coberturas" [ngValue]="cobertura.id">{{ cobertura.nombre }}</option>
-        </select>
-        <input formControlName="mandatoryAmount" type="number" (blur)="updateAmount()">
-    </div>
-    <div class="flex-row" style="justify-content: space-around;" *ngFor="let field of additionalFields">
-        <select formControlName="{{field.coberturaId}}">
-            <option [ngValue]="null">Seleccione una cobertura</option>
-            <option *ngFor="let cobertura of coberturas" [ngValue]="cobertura.id">{{ cobertura.nombre }}</option>
-        </select>
-        <input formControlName="{{field.montoAsegurado}}" type="number" (blur)="updateAmount()">
-    </div>
-    <div class="flex-row" style="justify-content: space-around;">
-        <span style="width: 7rem;">Total:</span>
-        <span style="width: 7rem;">${{ totalAmount$ | async }}</span>
-    </div>
-    <div class="flex-row" style="justify-content: space-around;">
-        <button (click)="addField()">Agregar campo</button>
-        <button (click)="removeField()" [disabled]="additionalFields.length < 1">Remover campo</button>
-        <button (click)="submit()" [disabled]="this.polizasCoberturasFormGroup.invalid">Submit</button>
-    </div>
-</form>
-<div class="flex-row" style="width: 35vw; gap: 0.5rem;" *ngIf="{stream: results$ | async} as observable">
-    <div class="flex-column card" style="margin-top: 1vh;" *ngFor="let polizaDetalle of observable.stream">
-        <span style="font-size: 110%; font-weight: 450;">{{ polizaDetalle.nombre }}</span>
-        <div class="flex-row" *ngFor="let cobertura of polizaDetalle.coberturas">
-            <span style="max-width: 8vw; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{ cobertura.nombre }}</span> 
-            <span style="margin-left: auto;">$ {{ cobertura.monto }}</span>
+        <div class="line-div" style="margin-top: 0;"></div>
+        <span style="font-size: 125%; font-weight: 475;">Coberturas:</span>
+        <div class="flex-row" style="justify-content: space-between;">
+            <select class="form-input" style="width: fit-content; padding: 0.2rem;" formControlName="mandatoryCoberturaId">
+                <option [ngValue]="null">Seleccione una cobertura</option>
+                <option *ngFor="let cobertura of coberturas" [ngValue]="cobertura.id">{{ cobertura.nombre }}</option>
+            </select>
+            <input class="form-input" style="padding: 0.2rem; width: 30%;" formControlName="mandatoryAmount" type="number" (blur)="updateAmount()" placeholder="$">
         </div>
-        <div class="flex-row" style="margin-top: auto;">
-            <span style="font-size: 110%; font-weight: 450;">Total </span> 
-            <span style="margin-left: auto;">$ {{ polizaDetalle.montoTotal }}</span>
+        <div class="flex-row" style="justify-content: space-between;" *ngFor="let field of additionalFields">
+            <select class="form-input" style="width: fit-content; padding: 0.2rem;" formControlName="{{field.coberturaId}}">
+                <option [ngValue]="null">Seleccione una cobertura</option>
+                <option *ngFor="let cobertura of coberturas" [ngValue]="cobertura.id">{{ cobertura.nombre }}</option>
+            </select>
+            <input class="form-input" style="padding: 0.2rem; width: 30%;" formControlName="{{field.montoAsegurado}}" type="number" (blur)="updateAmount()">
+        </div>
+        <div class="flex-row" style="justify-content: space-between; padding: 0 2rem;">
+            <span class="raise-text" style="color: red" (click)="removeField()">Remover campo</span>
+            <span class="raise-text" style="color: rgb(50, 95, 177)" (click)="addField()">+ Agregar campo</span>
+        </div>
+        <div class="flex-row" style="justify-content: space-between;">
+            <span style="width: 7rem;">Total:</span>
+            <span style="width: 7rem;">${{ totalAmount$ | async }}</span>
+        </div>
+        <button class="btn" (click)="submit()" [disabled]="this.polizasCoberturasFormGroup.invalid">Submit</button>
+    </form>
+    <div class="flex-column" style="width: 50%; gap: 0.5rem;" *ngIf="{stream: results$ | async} as observable">
+        <span style="font-size: 150%; font-weight: 500; margin-bottom: 1vh;">Seguros</span>
+        <div class="flex-row" style="column-gap: 0.4rem; flex-wrap: wrap;">
+            <div class="flex-column card" style="margin-top: 1vh; width: 30%;" *ngFor="let polizaDetalle of observable.stream">
+                <span style="font-size: 110%; font-weight: 450;">{{ polizaDetalle.nombre }}</span>
+                <div class="line-div" style="margin-top: 0; margin-bottom: 0.75vh;"></div>
+                <div class="flex-row" style="width: 100%;" *ngFor="let cobertura of polizaDetalle.coberturas">
+                    <span style="max-width: 70%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{ cobertura.nombre }}</span> 
+                    <span style="margin-left: auto;">$ {{ cobertura.monto }}</span>
+                </div>
+                <div class="line-div"></div>
+                <div class="flex-row">
+                    <span style="font-size: 110%; font-weight: 450;">Total </span> 
+                    <span style="margin-left: auto;">$ {{ polizaDetalle.montoTotal }}</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

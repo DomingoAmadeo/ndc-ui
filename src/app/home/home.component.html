@@ -1,9 +1,9 @@
 <div class="container">
-    <div class="flex-row" style="gap: 1rem; height: 48vh; width: 70vw; justify-content: center;">
+    <div class="flex-row" style="gap: 1rem; height: 48vh; width: 90vw; justify-content: center;">
         <app-polizas (polizaArray)="updatePoliza($event)" style="width: 50%;"></app-polizas>
         <app-coberturas (coberturaArray)="updateCoberturas($event)" style="width: 50%;"></app-coberturas>
     </div>
-    <div class="flex-row" style="justify-content: center; width: 70vw; margin-top: 2vh;">
-        <app-polizas-coberturas [coberturas]="coberturas" [polizas]="polizas"></app-polizas-coberturas>
+    <div class="flex-row" style="justify-content: center; width: 90vw; margin-top: 3vh;">
+        <app-polizas-coberturas [coberturas]="coberturas" [polizas]="polizas" style="width: 100%;"></app-polizas-coberturas>
     </div>
 </div>
