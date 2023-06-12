@@ -4,6 +4,6 @@
         <app-coberturas (coberturaArray)="updateCoberturas($event)" style="width: 50%;"></app-coberturas>
     </div>
     <div class="flex-row" style="justify-content: center; width: 90vw; margin-top: 3vh;">
-        <app-polizas-coberturas [coberturas]="coberturas" [polizas]="polizas" style="width: 100%;"></app-polizas-coberturas>
+        <app-polizas-coberturas #polizasCoberturas [coberturas]="coberturas" [polizas]="polizas" style="width: 100%;"></app-polizas-coberturas>
     </div>
 </div>
